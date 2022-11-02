@@ -1,0 +1,115 @@
+---
+title: "A01610836_ev1_Parte2"
+author: "Miguel Weiping Tang Feng A01610836 Campus SLP"
+date: "21/4/2021"
+output: html_document
+---
+# Lectura y longitud de las secuencias
+```{r}
+library("seqinr")
+
+uk <- read.fasta("B.1.1.7.fasta")
+sou_af <- read.fasta("B.1.351.fasta")
+usa1 <- read.fasta("B.1.427.fasta")
+usa2 <- read.fasta("B.1.429.fasta")
+brasil <- read.fasta("P.1.fasta")
+```
+
+# Longitud de las secuencias
+```{r}
+lon_uk <- length(uk[[1]])
+lon_sou_af <- length(sou_af[[1]])
+lon_usa1 <- length(usa1[[1]])
+lon_usa2 <- length(usa2[[1]])
+lon_brasil <- length(brasil[[1]])
+
+lon_uk
+lon_sou_af
+lon_usa1
+lon_usa2
+lon_brasil
+```
+
+# Porcentaje de GC de las variantes
+```{r}
+print(GC(uk[[1]]))
+print(GC(sou_af[[1]]))
+print(GC(usa1[[1]]))
+print(GC(usa2[[1]]))
+print(GC(brasil[[1]]))
+```
+
+# Gráficas de bases de ADN de cada variante de virus
+
+```{r}
+graf_uk <- barplot(table(uk), main ="Variante B.1.1.7", col = 1:4)
+graf_sou_af <- barplot(table(sou_af), main ="Variante B.1.351", col =1:4)
+graf_usa1 <- barplot(table(usa1), main ="Variante B.1.427",  col = 1:4)
+graf_usa2 <- barplot(table(usa2), main ="Variante B.1.429", col =1:4)
+graf_brasil <- barplot(table(brasil), main ="Variante P.1", col = 1:4)
+
+```
+
+
+
+
+
+# Interpretación escrita de las Gráficas
+
+Se observa que las cinco gráficas de las diferentes variantes del coronavirus Sars-Cov-2 son muy similares en cuanto a su composición, ya que, visualmente, parecen tener casi la misma cantidad de Adenina, Citosina, Guanina y Timina. Sin embargo, al ver la cantidad de nucleótidos que tiene cada variante, se puede concluir que realmente no es el mismo virus sino que presenta ligeros cambios incluyendo menos o más nucleótidos de cada tipo. Esto también se puede observar en el porcentaje de GC de cada una, teniendo alrededor de 38% de estas bases con unas variantes con ligeramente menor o mayor porcentaje.
+
+**Gráfica de la variante de Reino Unido (graf_uk):**
+En su secuencia se observa una pequeña cantidad de bases de nucleótidos de "N", esto significa que todas aquellas bases de "N" que tiene la secuencia, pueden representar tanto guanina, adenina, timina o citosina.
+
+**Gráfica de la variante de Sudáfrica (graf_sou_af):**
+Al igual que la gráfica de la variante de Reino Unido, ésta presenta en su secuencia la letra "N", sin embargo, en menor cantidad que la variante anterior.
+
+**Gráfica de la variante de USA1 (graf_usa1):**
+También presenta en su secuencia la letra "N" con una cantidad muy similar a la variante de Sudáfrica.
+
+**Gráfica de la variante de USA2 (graf_usa2):**
+Esta gráfica, además de presentar en su secuencia la letra "N" en mayor cantidad que las otras 3, presenta en sus bases la letra "Y", el cual significa que cada una de esas letras pueden ser Timina o Citosina
+
+**Gráfica de la variante de Brasil (graf_brasil):**
+Esta gráfica, a diferencia de las otras, no presenta ni la letra "N" ni la letra "Y" en su secuencia, sin embargo, tiene en un ligero porcentaje de bases "M", lo cual significa que cada una de esas letras pueden ser Adenina o Citosina.
+
+
+
+# Secuencia contrasentido
+```{r}
+
+SecuenciaComplementaria <- function(seq1){
+a <- 1:length(seq1[[1]])
+seq2 <- seq1
+
+for (i in a) {
+    if(seq2[[1]][i]=='a'){
+    seq2[[1]][i] <- 't'
+  }
+  else if(seq2[[1]][i]=='c'){
+    seq2[[1]][i] <- 'g'
+  }
+  else if(seq2[[1]][i]=='t'){
+    seq2[[1]][i] <- 'a'
+    }
+  else if(seq2[[1]][i]=='g'){
+    seq2[[1]][i] <- 'c'  
+  }
+  else{
+    seq2[[1]][i] <- seq2[[1]][i]
+  }
+}
+seq2
+}
+
+SecuenciaComplementaria(uk)
+SecuenciaComplementaria(sou_af)
+SecuenciaComplementaria(usa1)
+SecuenciaComplementaria(usa2)
+SecuenciaComplementaria(brasil)
+```
+
+
+
+
+
