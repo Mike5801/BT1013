@@ -1,0 +1,391 @@
+---
+title: "Parte 2 - Código"
+author: "Miguel Tang Weiping Tang Feng A01610836 Campus SLP"
+date: "27/4/2021"
+output: html_document
+---
+# Parte 1: Link del video
+https://youtu.be/LWNIzoIy1qM
+
+# Lectura de secuencias 
+
+```{r}
+library(seqinr)
+
+#Secuencias de los 10 países con más casos reportados
+ita <- read.fasta("Italia.fasta")
+uk <- read.fasta("Reino_Unido.fasta")
+rus <- read.fasta("Rusia.fasta")
+tur <- read.fasta("Turquia.fasta")
+usa <- read.fasta("USA.fasta")
+alem <- read.fasta("Alemania.fasta")
+bra <- read.fasta("Brasil.fasta")
+esp <- read.fasta("España.fasta")
+fra <- read.fasta("Francia.fasta")
+ind <- read.fasta("India.fasta")
+
+#Secuencias de los coronavirus en 10 especies
+perro <- read.fasta("perro.fasta")
+tigre <- read.fasta("tigre.fasta")
+tigre_mal <- read.fasta("tigre_malayo.fasta")
+gato <- read.fasta("gato.fasta")
+ham_dor <- read.fasta("hamster_dorado.fasta")
+leon <- read.fasta("leon.fasta")
+mono_ver <- read.fasta("mono_verde.fasta")
+vison <- read.fasta("vison.fasta")
+vison_ame <- read.fasta("vison_americano.fasta")
+vison_eur <- read.fasta("vison_europeo.fasta")
+
+#Secuencias de 10 coronavirus humanos
+cor_229e <- read.fasta("coronavirus_229E.fasta")
+cor_hku1 <- read.fasta("coronavirus_hku1.fasta")
+cor_nl63 <- read.fasta("coronavirus_nl63.fasta")
+cor_oc43 <- read.fasta("coronavirus_oc43.fasta")
+mers <- read.fasta("mers.fasta")
+sars <- read.fasta("sars.fasta")
+cor_B117 <- read.fasta("B.1.1.7.fasta")
+cor_B1351 <- read.fasta("B.1.351.fasta")
+cor_B1617 <- read.fasta("B.1.617.fasta")
+sars2 <- read.fasta("Sars-Cov-2_Original.fasta")
+```
+
+# Longitud de las secuencias
+
+**Secuencias de países con más casos reportados**
+```{r}
+#Longitud de secuencias de los países con más casos de coronavirus
+length(ita[[1]])
+length(uk[[1]])
+length(rus[[1]])
+length(tur[[1]])
+length(usa[[1]])
+length(alem[[1]])
+length(bra[[1]])
+length(esp[[1]])
+length(fra[[1]])
+length(ind[[1]])
+```
+
+**Secuencias de coronavirus en otras especies**
+```{r}
+#Longitud de secuencias de coronavirus en otras especies
+length(perro[[1]])
+length(tigre[[1]])
+length(tigre_mal[[1]])
+length(gato[[1]])
+length(ham_dor[[1]])
+length(leon[[1]])
+length(mono_ver[[1]])
+length(vison[[1]])
+length(vison_ame[[1]])
+length(vison_eur[[1]])
+```
+
+**Secuencias de coronavirus humanos**
+```{r}
+#Longitud de secuencias de coronavirus humanos
+length(cor_229e[[1]])
+length(cor_hku1[[1]])
+length(cor_nl63[[1]])
+length(cor_oc43[[1]])
+length(sars[[1]])
+length(mers[[1]])
+length(cor_B117[[1]])
+length(cor_B1351[[1]])
+length(cor_B1617[[1]])
+length(sars2[[1]])
+```
+
+# Gráficas de comparación de número de bases de nucléotidos
+
+**Gráfica de secuencias de países con más casos de coronavirus**
+```{r}
+par(mfrow=c(2,5))
+barplot(table(usa), col =1:4, main ="USA", las=2)
+barplot(table(ind), col =1:4, main ="India", las=2)
+barplot(table(bra), col =1:4, main ="Brasil", las=2)
+barplot(table(fra), col =1:4, main ="Francia", las=2)
+barplot(table(rus), col =1:4, main ="Rusia", las=2)
+barplot(table(tur), col =1:4, main ="Turquía", las=2)
+barplot(table(uk), col =1:4, main ="Reino Unido", las=2)
+barplot(table(ita), col =1:4, main ="Italia", las=2)
+barplot(table(esp), col =1:4, main ="España", las=2)
+barplot(table(alem), col =1:4, main ="Alemania", las=2)
+```
+
+***Interpretación de las gráficas:***
+
+Se puede observar que los coronavirus de los diferentes países con más casos reportados son muy similares. Gráficamente parecen tener el mismo número de adenina, guanina, citosina y timina, sin embargo, se puede saber que esto no es completamente cierto, debido a que la longitud de cada una de las secuencias es diferente para cada coronovirus obtenido por país, indicando que si presentan ligeros cambios. También se presentan bases de N en la secuencia obtenida de Francia y en la de Reino Unido, siendo el que tiene mayor cantidad la secuencia de Francia. La letra "N" significa que en lugar de esa letra pueden ser cualquiera de las otras bases (adenina, guanina, citosina o timina).
+
+**Gráfica de secuencias de coronavirus en otras especies**
+```{r}
+par(mfrow=c(2,3))
+barplot(table(perro), col =1:4, main ="Perro", las=2)
+barplot(table(tigre), col =1:4, main ="Tigre", las=2)
+barplot(table(tigre_mal), col =1:4, main ="Tigre Malayo", las=2)
+barplot(table(gato), col =1:4, main ="Gato", las=2)
+barplot(table(ham_dor), col =1:4, main ="Hamster Dorado", las=2)
+par(mfrow=c(2,3))
+barplot(table(leon), col =1:4, main ="Leon", las=2)
+barplot(table(mono_ver), col =1:4, main ="Mono verde", las=2)
+barplot(table(vison), col =1:4, main ="Vison", las=2)
+barplot(table(vison_ame), col =1:4, main ="Vison americano", las=2)
+barplot(table(vison_eur), col =1:4, main ="Vison europeo", las=2)
+```
+
+***Interpretación de las gráficas:***
+
+En cuanto al coronavirus observado en diferentes espeices, se puede decir que los nucleótidos adenina, guanina, citosina y timina presentan una cantidad muy similar entre las diez especies (sabiendo que no son iguales por la cantidad de nucleótidos encontrado en cada secuencia individual), sin embargo, en la mayoría de las especies se presentan una o varias bases desconocidas. Comenzando los que tienen una base extra están el mono verde y el gato que presentan en sus bases la letra "N", siendo el de mayor cantidad el mono verde. También, se observa que el león posee una base "R", el cual significa que en lugar de esa letra puede ser cualquier purina (adenina o guanina).
+
+Después, la especie que tiene dos bases extras es el tigre, teniendo en su secuencia "R" e "Y" en una cantidad muy pequeña, significando que en lugar de la letra "Y", éstas pueden ser pirimidinas (citosina o timina).
+
+La especie que tiene cuatro bases extras es el visón americano, conteniendo en su secuencia "K","N","R" y "W" también en cantidades muy pequeñas comparado a las bases principales. El significado de la "K" es que en lugar de esa letra pueden ser guanina o timina, en el caso de la letra "W", significa que en lugar de esa letra pueden ser adenina o timina.
+
+La especie con la mayor cantidad de bases extras es el visón, teniendo en su secuencia "M", "N", "R", "S", "W" e "Y", donde todas ellas son en una cantidad muy pequeña resaltando un poco más la base "N". Para el significado de la letra "M", este representa que en lugar de esa letra pueden ser las bases adenina o citosina, y para el caso de la letra "S", significa que en lugar de esa letra pueden ser las bases guanina o citosina.
+
+Las especies que tienen en su secuencia solo las bases normales (adenina, guanina, citosina y timina) fueron el visón europeo, el hamster dorado, el tigre malayo y el perro.
+
+**Gráfica de secuencias de coronavirus humanos**
+```{r}
+par(mfrow=c(2,5))
+barplot(table(cor_229e), col =1:4, main ="Cor 229E", las=2)
+barplot(table(cor_hku1), col =1:4, main ="Cor HKU1", las=2)
+barplot(table(cor_nl63), col =1:4, main ="Cor NL63", las=2)
+barplot(table(cor_oc43), col =1:4, main ="Cor OC43", las=2)
+barplot(table(sars), col =1:4, main ="Cor SARS", las=2)
+barplot(table(mers), col =1:4, main ="Cor MERS", las=2)
+barplot(table(cor_B117), col =1:4, main ="Cor B.1.1.7", las=2)
+barplot(table(cor_B1351), col =1:4, main ="Cor B.1.351", las=2)
+barplot(table(cor_B1617), col =1:4, main ="Cor B.1.617", las=2)
+barplot(table(sars2), col =1:4, main ="Cor SARS2", las=2)
+```
+
+***Interpretación de las gráficas:***
+
+Entre los diferentes coronavirus que afectan a los humanos, sí se observa una gran diferencia entre algunos coronavirus con respecto al SARS-CoV-2. Este coronavirus presenta aproximadamente 9 000 bases de adenina, 5 800 bases de citosina, 6 000 bases de guanina y 10 000 bases de timina. 
+
+Si se compara la cantidad con cada coronavirus iniciando con el coronavirus 229E, se observa que la cantidad de anina es mucho menor que el del SARS-CoV-2. También se observa que hay una disminución entre las bases de citosina y guanina. El valor de la timina parece mantenerse similar al de SARS-CoV-2.
+
+En el caso  del coronavirus HKU1, se observa que la cantidad de adenina es un tanto similar al del SARS-CoV-2, sin embargo es ligeramente menor. En el caso de la citosina, la cantidad es mucho menor comparado al virus, y para la guanina se observa también una similitud. En el caso de la timina, se puede ver que este coronavirus tiene mucha mayor cantidad de esta base en comparación con el SARS-CoV-2.
+
+El coronavirus NL63, también presenta una menor cantidad en las bases de adenina y citosina, sin embargo, las bases de guanina y timina son un tanto similares.
+
+Para el coronavirus OC43, la cantidad de adenina se mantiene relativamente igual, sin embargo, se presenta una disminución en la cantidad de citosina. En el caso de la guanina y de la timina, ambas tienen una mayor cantidad que el SARS-CoV-2. Además, este coronavirus presenta en una cantidad muy pequeña la base "N".
+
+Cuando se compara el coronavirus del SARS y el coronavirus del MERS, se observa un comportamiento muy similar entre la cantidad de las bases entre los tres virus, tienendo una ligera diferencia en la cantidad de adenina para el coronavirus del MERS.
+
+Con respecto al coronavirus B.1.1.7, B.1.351 y B.1.617, éstos tienen el comportamiento más similar al SARS-CoV-2 de todos los demás coronavirus vistos, y esto es debido a que éstas son variantes del mismo coronavirus. Sin embargo, en la variante B.1.1.7 y la B.1.351, se presenta la base "N" en pequeñas cantidades, siendo la que más tiene la B.1.1.7. A pesar de ser variantes y que se observa un comportamiento casi igual en las gráficas quitando la base "N", se sabe que no tienen exactamente la misma cantidad de nucleótidos debido a que sus secuencias tienen longitudes diferentes.
+
+# Análisis jerárquico global 
+```{r}
+#Carga de Librerías
+
+library(Biostrings)
+library(seqinr)
+library(adegenet)
+library(ape)
+library(ggtree)
+library(DECIPHER)
+library(viridis)
+library(ggplot2)
+library(ggmsa)
+```
+
+**Caso de estudio para coronavirus de países con mayores casos reportados**
+```{r}
+#Carga de secuencias
+virus_pais_seq_noalign <- readDNAStringSet ("seqs_paises.fasta", format = "fasta")
+virus_pais_seq_noalign
+
+#Alineamiento de la secuencia
+virus_pais_seq_noalign <- OrientNucleotides(virus_pais_seq_noalign)
+virus_pais_seq_align <- AlignSeqs(virus_pais_seq_noalign)
+
+#Visualizar Resultado
+BrowseSeqs(virus_pais_seq_align, highlight=0)
+
+#Guardado del resultado
+writeXStringSet(virus_pais_seq_align, file="virus_pais_seq_align.fasta")
+
+#Obtener nuevo archivo
+virus_pais_align <- read.alignment("virus_pais_seq_align.fasta", format = "fasta")
+
+#Creación de matriz distancia
+matriz_pa_d <- dist.alignment(virus_pais_align, matrix = "similarity")
+
+#Visualización de matriz distancia (Sombras más oscuras de gris representan más distancia)
+temp1 <- as.data.frame(as.matrix(matriz_pa_d))
+table.paint(temp1, cleg = 0, clabel.row = .5, clabel.col = .5) + scale_color_viridis()
+
+#Creación de árbol con librería ape
+virus_pais_tree <- nj(matriz_pa_d)
+virus_pais_tree <- ladderize(virus_pais_tree)
+
+#Plot del árbol
+plot(virus_pais_tree, cex = 0.6)
+title("Coronavirus de los países con mayor número de casos reportados")
+
+#Visualización del alineamiento de las secuencias
+ggmsa(virus_pais_seq_noalign, 320, 360, color = "Chemistry_AA")
+
+
+```
+
+**Caso de estudio para coronavirus encontrados en otras especies**
+```{r}
+#Carga de secuencias
+virus_especies_seq_noalign <- readDNAStringSet ("seqs_especies.fasta", format = "fasta")
+virus_especies_seq_noalign
+
+#Alineamiento de la secuencia
+virus_especies_seq_noalign <- OrientNucleotides(virus_especies_seq_noalign)
+virus_especies_seq_align <- AlignSeqs(virus_especies_seq_noalign)
+
+#Visualizar Resultado
+BrowseSeqs(virus_especies_seq_align, highlight=0)
+
+#Guardado del resultado
+writeXStringSet(virus_especies_seq_align, file="virus_especies_seq_align.fasta")
+
+#Obtener nuevo archivo
+virus_especies_align <- read.alignment("virus_especies_seq_align.fasta", format = "fasta")
+
+#Creación de matriz distancia
+matriz_esp_d <- dist.alignment(virus_especies_align, matrix = "similarity")
+
+#Visualización de matriz distancia (Sombras más oscuras de gris representan más distancia)
+temp2 <- as.data.frame(as.matrix(matriz_esp_d))
+table.paint(temp2, cleg = 0, clabel.row = .5, clabel.col = .5) + scale_color_viridis()
+
+#Creación de árbol con librería ape
+virus_especies_tree <- nj(matriz_esp_d)
+virus_especies_tree <- ladderize(virus_especies_tree)
+
+#Plot del árbol
+plot(virus_especies_tree, cex = 0.6)
+title("Coronavirus encontrados en otras especies")
+
+#Visualización del alineamiento de las secuencias
+ggmsa(virus_especies_seq_noalign, 320, 360, color = "Chemistry_AA")
+
+```
+
+**Caso de estudio para coronavirus humanos**
+```{r}
+#Carga de secuencias
+virus_cor_seq_noalign <- readDNAStringSet ("seqs_cor.fasta", format = "fasta")
+virus_cor_seq_noalign
+
+#Alineamiento de la secuencia
+virus_cor_seq_noalign <- OrientNucleotides(virus_cor_seq_noalign)
+virus_cor_seq_align <- AlignSeqs(virus_cor_seq_noalign)
+
+#Visualizar Resultado
+BrowseSeqs(virus_cor_seq_align, highlight=0)
+
+#Guardado del resultado
+writeXStringSet(virus_cor_seq_align, file="virus_cor_seq_align.fasta")
+
+#Obtener nuevo archivo
+virus_cor_align <- read.alignment("virus_cor_seq_align.fasta", format = "fasta")
+
+#Creación de matriz distancia
+matriz_cor_d <- dist.alignment(virus_cor_align, matrix = "similarity")
+
+#Visualización de matriz distancia (Sombras más oscuras de gris representan más distancia)
+temp3 <- as.data.frame(as.matrix(matriz_cor_d))
+table.paint(temp3, cleg = 0, clabel.row = .5, clabel.col = .5) + scale_color_viridis()
+
+#Creación de árbol con librería ape
+virus_cor_tree <- nj(matriz_cor_d)
+virus_cor_tree <- ladderize(virus_cor_tree)
+
+#Plot del árbol
+plot(virus_cor_tree, cex = 0.6)
+title("Coronavirus que infectan humanos")
+
+#Visualización del alineamiento de las secuencias
+ggmsa(virus_cor_seq_noalign, 320, 360, color = "Chemistry_AA")
+```
+
+**Todos los casos de estudio**
+```{r}
+#Carga de secuencias
+virus_all_seq_noalign <- readDNAStringSet ("seqs_all.fasta", format = "fasta")
+virus_all_seq_noalign
+
+#Alineamiento de la secuencia
+virus_all_seq_noalign <- OrientNucleotides(virus_all_seq_noalign)
+virus_all_seq_align <- AlignSeqs(virus_all_seq_noalign)
+
+#Visualizar Resultado
+BrowseSeqs(virus_all_seq_align, highlight=0)
+
+#Guardado del resultado
+writeXStringSet(virus_all_seq_align, file="virus_all_seq_align.fasta")
+
+#Obtener nuevo archivo
+virus_all_align <- read.alignment("virus_all_seq_align.fasta", format = "fasta")
+
+#Creación de matriz distancia
+matriz_all_d <- dist.alignment(virus_all_align, matrix = "similarity")
+
+#Visualización de matriz distancia (Sombras más oscuras de gris representan más distancia)
+temp4 <- as.data.frame(as.matrix(matriz_all_d))
+table.paint(temp4, cleg = 0, clabel.row = .5, clabel.col = .5) + scale_color_viridis()
+
+#Creación de árbol con librería ape
+virus_all_tree <- nj(matriz_all_d)
+virus_all_tree <- ladderize(virus_all_tree)
+
+#Plot del árbol
+plot(virus_all_tree, cex = 0.6)
+title("Todas las secuencias de coronavirus recolectadas")
+
+#Visualización del alineamiento de las secuencias
+ggmsa(virus_all_seq_noalign, 320, 360, color = "Chemistry_AA")
+```
+
+# Conclusiones
+
+**Caso de estudio para coronavirus de los países con mayores casos**
+
+¿Son muy diferentes las variantes entre cada país? ¿Es diferente el SARS-CoV-2 entre las diferentes poblaciones: Asiática, Hispana, Europea o Africana?
+
+Dependiendo de cuál variante se hable sí se encuentran algunas diferencias y similitudes. Por ejemplo, se observa a partir del árbol filogenético de los coronavirus de los países con mayores casos cómo algunos tienen relación con otros por ejemplo la encontrada en Turquía (MW308549) junto con la que está en India (MW828325). Sin embargo también se presenta el caso contrario para dos coronavirus de diferentes países los cuales no guardan relación alguna. Éstos son la secuencia encontrada en Francia (MG993785) y la de Estados Unidos (MZ021680).
+
+**Caso de estudio para coronavirus encontrados en otras especies**
+
+Explicar el fenómeno de zoonosis del virus.
+
+Para el caso de los coronavirus encontrados en otras especies se puede decir que, de acuerdo a lo observado en el árbol filogenético, cada variante del virus encontrada en los diferentes animales tiene al menos una relación con alguna de las otras.
+
+Si muchos de estos animales como lo pueden ser los animales domésticos o aquellos que se consumen tienen un constante contacto con los humanos, los virus que tienen en su organismo como anfitrión pueden pasar al nuestro y lograr adaptarse al cuerpo humano para poder infectarlo, como en el caso del Sars-CoV-2, el cual se sospecha que uno de los posibles anfitriones es el murciélago, ya que éste posee diversas variantes de coronavirus muy simila al que provoca la envermedad del COVID-19.
+
+**Caso de estudio para coronavirus humanos**
+
+Se observa a partir del árbol filogenético que la mayoría de los tipos de coronavirus se relacionan unos con otros, donde todos convergen hasta llegar al coronavirus actual SARS-CoV-2 (NC045512). La única variante que parece no tener relación tan cercana con el coronavirus, de acuerdo a los resultados obtenidos, es la variante africana B.1.351 (MW571126). Sin embargo, los demás coronavirus que infectan humanos junto con las variantes actuales que han surgido del mismo virus, sí tienen relación con el SARS-CoV-2.
+
+**Todos los casos de estudio combinados**
+
+En el árbol filogenético generado a partir de la comparación de todas las secuencias encontradas en esta evidencia, se observa que las que siguen manteniendo la misma relación (al menos en su mayoría) son aquellos coronavirus que afectan a los humanos (La parte de abajo del árbol filogenético). A partir de este punto, comienza a cambiar la manera en la que converge hasta llegar a la rama principal, indicando que puede haber, al juntar los coronavirus de diferentes países y de otras especies, alguna relación entre ellas.
+
+# Referencias Bibliográficas
+
+- Organización Mundial de la Salud. (s.f.). Zoonosis y medio ambiente. Recuperado de: https://www.who.int/foodsafety/areas_work/zoonose/es/
+
+- National Library of Medicine. (2021). NCBI Virus [Conjunto de datos]. Recuperado de National Center for Biotechnology Information. https://www.ncbi.nlm.nih.gov/labs/virus/vssi/#/virus?SeqType_s=Nucleotide
+
+```{r}
+#Los paquetes utilizados en la evidencia
+citation("Biostrings")
+citation("seqinr")
+citation("adegenet")
+citation("ape")
+citation("ggtree")
+citation("DECIPHER")
+citation("viridis")
+citation("ggplot2")
+citation("ggmsa")
+```
+
